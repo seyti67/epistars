@@ -1,0 +1,29 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--title-size: 5rem;
+	--text-size: 1rem;
+	--padding-size: 1rem;
+}
+
+body,
+html {
+	height: 100%;
+	color: #fff;
+}
+
+h1 {
+	font-family: 'VT323', monospace;
+	font-weight: 400;
+	cursor: text;
+}
+
+.title {
+	font-size: var(--title-size);
+	margin: 2rem auto;
+	width: fit-content;
+}
