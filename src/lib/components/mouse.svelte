@@ -3,14 +3,15 @@
 
 	const stateConfigs: { [key: string]: { color?: string; size?: number } } = {
 		default: {},
-		text: { color: '#000b16', size: 5 }
+		bad: { color: '#7c1b1b' /* '#000b16' */, size: 1 }
 	};
 
 	let state = 'default';
 	let smokeColor: string;
 	let smokeSize: number;
 	function update(e: MouseEvent) {
-		state = window.getComputedStyle(e.target as Element).getPropertyValue('cursor');
+		state = (e.target as HTMLElement).getAttribute('data-state') || 'default';
+		console.log(state);
 		if (!stateConfigs[state]) {
 			state = 'default';
 		}
