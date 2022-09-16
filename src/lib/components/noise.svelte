@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let size = 20;
 	export let hsl: number[];
+	export let opacity: number;
 
 	let svgEl: any;
 	let nbW: number;
@@ -11,7 +12,7 @@
 	}
 </script>
 
-<svg bind:this={svgEl}>
+<svg bind:this={svgEl} style:opacity>
 	{#each new Array(nbW) as _, i}
 		{#each new Array(nbH) as _, j}
 			<rect

@@ -13,9 +13,9 @@
 <Mouse />
 
 <nav>
-	<Noise hsl={[211, 58, 30]} />
+	<Noise hsl={[211, 58, 30]} opacity={0.8} />
 	{#each pages as page}
-		<a href="epistars/{page.link}">{page.name}</a>
+		<a href="epistars/{page.link}" data-state="clickable">{page.name}</a>
 	{/each}
 </nav>
 <Scroll>
@@ -32,7 +32,6 @@
 		z-index: 2;
 		height: var(--nav-h);
 		width: 100%;
-		background-color: rgb(21, 51, 107);
 		display: flex;
 		justify-content: center;
 		align-items: center;

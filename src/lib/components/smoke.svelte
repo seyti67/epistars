@@ -61,6 +61,8 @@
 				support_linear_float = gl.getExtension('OES_texture_float_linear');
 			}
 
+			gl.clearColor(0.0, 0.0, 255.0, 0);
+
 			var internalFormat = isWebGL2 ? gl.RGBA16F : gl.RGBA;
 			var internalFormatRG = isWebGL2 ? gl.RG16F : gl.RGBA;
 			var formatRG = isWebGL2 ? gl.RG : gl.RGBA;
@@ -378,10 +380,11 @@
 
 			var pressureTexId = pressure.first[2];
 
-			gl.activeTexture(gl.TEXTURE0 + pressureTexId);
 			gl.bindTexture(gl.TEXTURE_2D, pressure.first[0]);
 			gl.uniform1i(clearProgram.uniforms.uTexture, pressureTexId);
 			gl.uniform1f(clearProgram.uniforms.value, config.PRESSURE_DISSIPATION);
+			// clear canvas with transparent background
+			gl.clearColor(0, 0, 0, 0);
 			blit(pressure.second[1]);
 			pressure.swap();
 
@@ -504,14 +507,13 @@
 	});
 </script>
 
-<canvas height="128" width="128" />
+<canvas />
 
 <style>
 	canvas {
 		position: fixed;
 		width: 100%;
 		height: 100%;
-		image-rendering: pixelated;
-		image-rendering: crisp-edges;
+		background-color: transparent;
 	}
 </style>

@@ -3,7 +3,9 @@
 
 	const stateConfigs: { [key: string]: { color?: string; size?: number } } = {
 		default: {},
-		bad: { color: '#7c1b1b' /* '#000b16' */, size: 1 }
+		text: { color: '#000b16' },
+		bad: { color: '#7c1b1b' },
+		clickable: { color: '#228822', size: 5 }
 	};
 
 	let state = 'default';
