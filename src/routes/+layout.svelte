@@ -10,8 +10,6 @@
 	];
 </script>
 
-<Mouse />
-
 <nav>
 	<Noise hsl={[211, 58, 30]} opacity={0.8} />
 	{#each pages as page}
@@ -21,6 +19,7 @@
 <Scroll>
 	<slot />
 </Scroll>
+<Mouse />
 
 <style>
 	:global(:root) {
