@@ -1,6 +1,7 @@
 <script>
 	// @ts-nocheck
 	import { onMount } from 'svelte';
+	export let lowperf = true;
 
 	export let smokeColor = '';
 	//convert hexcode to rgb array
@@ -15,13 +16,15 @@
 		PRESSURE_DISSIPATION: 0.99,
 		PRESSURE_ITERATIONS: 10,
 		CURL: 40,
-		SPLAT_RADIUS: 0.0006
+		SPLAT_RADIUS: 1
 	};
 	export let smokeSize = 1;
-	$: config.SPLAT_RADIUS = 0.0006 * smokeSize;
+	$: config.SPLAT_RADIUS = 0.00008 * smokeSize;
 
 	('use strict');
 	onMount(() => {
+		if (lowperf) return;
+
 		var canvas = document.getElementsByTagName('canvas')[0];
 
 		canvas.width = canvas.clientWidth / 10;
@@ -57,8 +60,6 @@
 				gl.getExtension('EXT_color_buffer_float');
 				support_linear_float = gl.getExtension('OES_texture_float_linear');
 			}
-
-			gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
 			var internalFormat = isWebGL2 ? gl.RGBA16F : gl.RGBA;
 			var internalFormatRG = isWebGL2 ? gl.RG16F : gl.RGBA;
@@ -264,7 +265,6 @@
 			gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
 			gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
 			gl.viewport(0, 0, w, h);
-			gl.clear(gl.COLOR_BUFFER_BIT);
 
 			return [texture, fbo, texId];
 		}

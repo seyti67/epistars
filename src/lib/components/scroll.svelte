@@ -14,9 +14,9 @@
 			gsap.set(viewport || content.parentNode, {
 				overflow: 'hidden',
 				position: 'fixed',
-				height: '100%',
+				height: 'calc(100% - var(--nav-h))',
 				width: '100%',
-				top: 0,
+				top: 'var(--nav-h)',
 				left: 0,
 				right: 0,
 				bottom: 0

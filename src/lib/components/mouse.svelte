@@ -21,4 +21,4 @@
 </script>
 
 <svelte:body on:mouseover={update} />
-<Smoke {smokeColor} {smokeSize} />
+<Smoke {smokeColor} {smokeSize} lowperf={false} />
