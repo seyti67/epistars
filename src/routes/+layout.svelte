@@ -1,25 +1,30 @@
 <script>
 	import Mouse from '$lib/components/mouse.svelte';
 	import Noise from '$lib/components/noise.svelte';
+	import PageTransition from '$lib/components/page-transition.svelte';
 	import Scroll from '$lib/components/scroll.svelte';
 	import '$lib/styles/global.css';
 
 	const pages = [
-		{ name: 'Télécharger', link: 'telecharger' },
-		{ name: 'Wiki', link: 'wiki' }
+		{ title: 'Accueil', path: '' },
+		{ title: 'Télécharger', path: 'telecharger' },
+		{ title: 'Wiki', path: 'wiki' }
 	];
 </script>
 
+<Mouse />
+
 <nav>
-	<Noise hsl={[211, 58, 30]} opacity={0.8} />
+	<Noise hsl={[211, 58, 30]} />
 	{#each pages as page}
-		<a href="epistars/{page.link}" data-state="clickable">{page.name}</a>
+		<a href="/epistars/{page.path}" data-state="clickable">{page.title}</a>
 	{/each}
 </nav>
 <Scroll>
-	<slot />
+	<PageTransition>
+		<slot />
+	</PageTransition>
 </Scroll>
-<Mouse />
 
 <style>
 	:global(:root) {

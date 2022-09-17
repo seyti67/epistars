@@ -14,11 +14,13 @@
 		"@sveltejs/adapter-static": "^1.0.0-next.42",
 		"@sveltejs/kit": "next",
 		"@sveltejs/package": "next",
+		"@types/gsap": "^3.0.0",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"gsap": "^3.11.1",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.44.0",
@@ -28,9 +30,5 @@
 		"typescript": "^4.7.4",
 		"vite": "^3.1.0"
 	},
-	"type": "module",
-	"dependencies": {
-		"fluid-canvas": "^0.9.3",
-		"gsap": "^3.11.1"
-	}
+	"type": "module"
 }

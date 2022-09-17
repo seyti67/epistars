@@ -4,23 +4,23 @@
 	const stateConfigs: { [key: string]: { color?: string; size?: number } } = {
 		default: {},
 		text: { color: '#000b16' },
-		bad: { color: '#7c1b1b' },
-		clickable: { color: '#228822', size: 5 }
+		bad: { color: '#8c1c1c' },
+		clickable: { color: '#000000' }
 	};
 
 	let state = 'default';
 	let smokeColor: string;
 	let smokeSize: number;
-	function update(e: MouseEvent) {
-		state = (e.target as HTMLElement).getAttribute('data-state') || 'default';
-		console.log(state);
+	function update(e?: MouseEvent) {
+		if (e) state = (e.target as HTMLElement).getAttribute('data-state') || 'default';
+		else state = 'default';
 		if (!stateConfigs[state]) {
 			state = 'default';
 		}
-		smokeColor = stateConfigs[state].color || '#0d2d4c';
+		smokeColor = stateConfigs[state].color || '#1b588e';
 		smokeSize = stateConfigs[state].size || 1;
 	}
 </script>
 
 <svelte:body on:mouseover={update} />
-<Smoke {smokeColor} {smokeSize} lowperf={false} />
+<Smoke {smokeColor} {smokeSize} />

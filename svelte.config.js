@@ -10,6 +10,7 @@ const config = {
 			pages: 'docs',
 			assets: 'docs'
 		}),
+		trailingSlash: 'always',
 		prerender: {
 			enabled: true
 		},

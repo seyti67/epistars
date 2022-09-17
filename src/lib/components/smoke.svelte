@@ -1,18 +1,27 @@
+<script context="module">
+	export let fluids = {
+		setConfig: (key, value) => {},
+		setColor: () => {},
+		splat: (x, y, dx, dy, color) => {}
+	};
+</script>
+
 <script>
 	// @ts-nocheck
 	import { onMount } from 'svelte';
-	export let lowperf = true;
 
 	export let smokeColor = '';
 	//convert hexcode to rgb array
-	$: colorArr = (smokeColor || '#0d2d4c')
-		.match(/[A-Za-z0-9]{2}/g)
-		.map((v) => parseInt(v, 16) / 100);
+	$: if (smokeColor) {
+		let colorArr = smokeColor.match(/[A-Za-z0-9]{2}/g).map((v) => parseInt(v, 16) / 2000);
+		fluids.setColor({ r: colorArr[0], g: colorArr[1], b: colorArr[2] });
+	}
 
 	export let smokeSize = 1;
-	/* $: config.SPLAT_RADIUS = 0.00008 * smokeSize; */
+	$: fluids.setConfig('SPLAT_RADIUS', 0.03 * smokeSize);
 	onMount(async () => {
-		await import('$lib/scripts/fluids');
+		fluids = await import('$lib/scripts/fluids');
+		fluids.init();
 	});
 </script>
 
@@ -25,10 +34,7 @@
 				(ga.q = ga.q || []).push(arguments);
 			};
 		ga.l = +new Date();
-		ga('create', 'UA-105392568-1', 'auto');
-		ga('send', 'pageview');
 	</script>
-	<!-- <script src="epistars/fluids/script.js" defer></script> -->
 </svelte:head>
 
 <style>
@@ -37,5 +43,7 @@
 		width: 100%;
 		height: 100%;
 		background-color: transparent;
+		pointer-events: none;
+		z-index: 9999;
 	}
 </style>
