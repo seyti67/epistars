@@ -1,1 +1,1 @@
-<img src="http://images.4ever.eu/data/download/animaux/ane-238543.jpg?no-logo" alt="" />
+<img src="http://4everstatic.com/images/850xX/animaux/anes-238539.jpg" alt="" />
