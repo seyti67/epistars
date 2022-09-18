@@ -14,7 +14,7 @@ export function clipPath(node: HTMLElement, { duration = 1000, delay = 0 }) {
 				}
 			}, t * duration);
 			// from right
-			return `clip-path: circle(${eased * 100}% at 0% 100%);`;
+			return `clip-path: circle(${eased * 150}% at 0% 100%);`;
 		}
 	};
 }
