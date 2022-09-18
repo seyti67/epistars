@@ -26,7 +26,7 @@
 	});
 </script>
 
-<canvas />
+<canvas id="fluid-canvas" />
 <svelte:head>
 	<script>
 		window.ga =

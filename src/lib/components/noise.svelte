@@ -1,59 +1,58 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
 
 	export let size = 20;
 	export let hsl: number[];
 
-	let svgEl: any;
+	let canvas: any;
+	let ctx: any;
 	let nbW: number;
 	let nbH: number;
-	function update() {
-		nbW = Math.ceil(svgEl.clientWidth / size);
-		nbH = Math.ceil(svgEl.clientHeight / size);
-	}
-	$: if (svgEl) update();
 
-	let key = 0;
-	function refresh() {
-		key = Math.random();
+	function update() {
+		nbW = Math.ceil(canvas.clientWidth / size);
+		nbH = Math.ceil(canvas.clientHeight / size);
+		canvas.width = nbW;
+		canvas.height = nbH;
 	}
+
+	function drawPixel(x: number, y: number) {
+		ctx.fillStyle = `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2] + 10 - Math.random() * 20}%)`;
+		ctx.fillRect(x, y, 1, 1);
+	}
+	function paint() {
+		for (let x = 0; x < nbW; x++) {
+			for (let y = 0; y < nbH; y++) {
+				drawPixel(x, y);
+				console.log(x, y);
+			}
+		}
+	}
+
+	function refresh() {
+		let x = Math.floor(Math.random() * nbW);
+		let y = Math.floor(Math.random() * nbH);
+		drawPixel(x, y);
+	}
+
 	onMount(() => {
-		window.setInterval(refresh, 10000);
+		update();
+		ctx = canvas.getContext('2d');
+		paint();
+		window.setInterval(refresh, 10);
 		window.addEventListener('resize', update);
 	});
 </script>
 
-<svg bind:this={svgEl}>
-	{#key key}
-		{#each new Array(nbW) as _, i}
-			{#each new Array(nbH) as _, j}
-				<rect
-					transition:fly={{
-						duration: 300,
-						delay: 20 * (nbH + nbW - i - j),
-						y: -100,
-						x: -100
-					}}
-					style="fill: hsl({hsl[0]}, {hsl[1]}%, {Math.min(
-						100,
-						Math.max(0, hsl[2] + 16 * Math.random() - 8)
-					)}%);"
-					x={i * size}
-					y={j * size}
-					width={size}
-					height={size}
-				/>
-			{/each}
-		{/each}
-	{/key}
-</svg>
+<canvas bind:this={canvas} style:backgroundColor="hsl({hsl[0]},{hsl[1]}%,{hsl[2]}%)" />
 
 <style>
-	svg {
+	canvas {
 		position: absolute;
-		height: 100%;
+		top: 0;
+		left: 0;
 		width: 100%;
-		pointer-events: none;
+		height: 100%;
+		image-rendering: pixelated;
 	}
 </style>

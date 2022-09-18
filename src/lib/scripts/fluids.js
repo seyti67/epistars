@@ -6,7 +6,7 @@ Copyright (c) 2017 Pavel Dobryakov
 */
 
 // Simulation section
-const canvas = document.getElementsByTagName('canvas')[0];
+const canvas = document.getElementById('fluid-canvas');
 resizeCanvas();
 
 const config = {
