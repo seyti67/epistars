@@ -2,7 +2,8 @@
 	export let fluids = {
 		setConfig: (key, value) => {},
 		setColor: () => {},
-		splat: (x, y, dx, dy, color) => {}
+		splat: (x, y, dx, dy) => {},
+		multipleSplats: (amount) => {}
 	};
 </script>
 

@@ -20,11 +20,11 @@
 		<a href="/epistars/{page.path}" data-state="clickable">{page.title}</a>
 	{/each}
 </nav>
-<Scroll>
-	<PageTransition>
+<PageTransition>
+	<Scroll>
 		<slot />
-	</PageTransition>
-</Scroll>
+	</Scroll>
+</PageTransition>
 
 <style>
 	:global(:root) {

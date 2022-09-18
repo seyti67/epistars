@@ -23,7 +23,8 @@ const config = {
 	SHADING: true,
 	COLORFUL: false,
 	COLOR_UPDATE_SPEED: 10,
-	SMOKE_COLOR: { r: 0, g: 0.03, b: 0.15 },
+	SMOKE_COLOR: { r: 0.0135, g: 0.044, b: 0.071 },
+	DEFAULT_COLOR: { r: 0.0135, g: 0.044, b: 0.071 },
 	PAUSED: false,
 	BACK_COLOR: { r: 0, g: 0, b: 0 },
 	TRANSPARENT: true,
@@ -1074,7 +1075,6 @@ export function init() {
 
 	updateKeywords();
 	initFramebuffers();
-	/* multipleSplats(parseInt(Math.random() * 20) + 5); */
 	lastUpdateTime = Date.now();
 	update();
 }
@@ -1303,9 +1303,9 @@ function splatPointer(pointer) {
 	splat(pointer.texcoordX, pointer.texcoordY, dx, dy, pointer.color);
 }
 
-function multipleSplats(amount) {
+export function multipleSplats(amount) {
 	for (let i = 0; i < amount; i++) {
-		const color = config.SMOKE_COLOR;
+		const color = config.SMOKE_SCREEN;
 		const x = Math.random();
 		const y = Math.random();
 		const dx = 1000 * (Math.random() - 0.5);
@@ -1314,7 +1314,7 @@ function multipleSplats(amount) {
 	}
 }
 
-export function splat(x, y, dx, dy, color) {
+export function splat(x, y, dx, dy, color = config.DEFAULT_COLOR) {
 	splatProgram.bind();
 	gl.uniform1i(splatProgram.uniforms.uTarget, velocity.read.attach(0));
 	gl.uniform1f(splatProgram.uniforms.aspectRatio, canvas.width / canvas.height);

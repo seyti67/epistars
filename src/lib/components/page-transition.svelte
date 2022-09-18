@@ -1,35 +1,26 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
-	import { fade, scale } from 'svelte/transition';
-	import Pixelator from './pixelator.svelte';
+	import { clipPath } from '$lib/scripts/animations/clip';
+	import { keep } from '$lib/scripts/animations/keep';
 
-	const duration = 600;
-	const delay = 100;
+	const duration = 1000;
 
 	let key = 0;
-	let active = false;
 	beforeNavigate(() => {
-		active = true;
-		setTimeout(() => {
-			active = false;
-		}, duration + delay);
 		key += 1;
 	});
 </script>
 
 {#key key}
-	<div
-		class="wrap"
-		in:fade={{ delay: duration + delay, duration }}
-		out:scale={{ duration, delay, start: 1, opacity: 1 }}
-	>
+	<div class="wrap" out:keep={{ duration }} in:clipPath={{ duration }}>
 		<slot />
 	</div>
 {/key}
-<Pixelator {active} {duration} />
 
 <style>
 	.wrap {
-		background-color: var(--bg-color);
+		position: absolute;
+		left: 0;
+		width: 100%;
 	}
 </style>
