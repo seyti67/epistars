@@ -24,7 +24,6 @@
 		for (let x = 0; x < nbW; x++) {
 			for (let y = 0; y < nbH; y++) {
 				drawPixel(x, y);
-				console.log(x, y);
 			}
 		}
 	}

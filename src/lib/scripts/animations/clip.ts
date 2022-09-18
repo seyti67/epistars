@@ -6,15 +6,15 @@ export function clipPath(node: HTMLElement, { duration = 1000, delay = 0 }) {
 		delay,
 		duration,
 		css: (t: number) => {
-			const eased = 1 - quadIn(t);
+			const eased = quadIn(t);
 
 			setTimeout(() => {
 				for (let i = 0; i < 3; i++) {
-					fluids.splat(eased, 0.5, -100, 0);
+					fluids.splat(eased, eased, 100, 100);
 				}
 			}, t * duration);
 			// from right
-			return `clip-path: polygon(${eased * 100}% 0%, 100% 0%, 100% 100%, ${eased * 100}% 100%);`;
+			return `clip-path: circle(${eased * 100}% at 0% 100%);`;
 		}
 	};
 }
