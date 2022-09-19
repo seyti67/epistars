@@ -4,8 +4,12 @@
 	import Noise from '$lib/components/noise.svelte';
 	import PageTransition from '$lib/components/page-transition.svelte';
 	import Scroll from '$lib/components/scroll.svelte';
-	import '$lib/styles/global.css';
 	import { onMount } from 'svelte';
+
+	import '$lib/styles/global.css';
+	onMount(() => {
+		import('$lib/styles/lazy.css');
+	});
 
 	const pages = [
 		{ title: 'Accueil', path: '' },

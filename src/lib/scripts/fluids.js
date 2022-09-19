@@ -38,8 +38,8 @@ const config = {
 	SUNRAYS_RESOLUTION: 196,
 	SUNRAYS_WEIGHT: 1.0
 };
-export const setConfig = (key, value) => {
-	config[key] = value;
+export const setSize = (size) => {
+	config.SPLAT_RADIUS = size * 0.02;
 };
 export const setColor = (color) => {
 	config.SMOKE_COLOR = color;

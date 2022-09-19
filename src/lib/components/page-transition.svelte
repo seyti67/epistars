@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
-	import { clipPath } from '$lib/scripts/animations/clip';
-	import { keep } from '$lib/scripts/animations/keep';
+	import { rotate } from '$lib/scripts/animations/rotate';
 
-	const duration = 1500;
+	const duration = 3000;
 
 	let key = 0;
 	beforeNavigate(() => {
@@ -11,16 +10,20 @@
 	});
 </script>
 
-{#key key}
-	<div class="circle" out:keep={{ duration }} in:clipPath={{ duration }}>
-		<slot />
-	</div>
-{/key}
+<div class="wrap">
+	{#key key}
+		<div class="page" out:rotate={{ duration }} in:rotate={{ out: false, duration }}>
+			<slot />
+		</div>
+	{/key}
+</div>
 
 <style>
-	.circle {
-		position: absolute;
-		left: 0;
-		width: 100%;
+	.wrap {
+		perspective: 10000px;
+		transform-style: preserve-3d;
+		perspective-origin: 50% 0%;
+	}
+	.page {
 	}
 </style>

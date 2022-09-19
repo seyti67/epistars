@@ -1,5 +1,6 @@
-export function keep(_: any, { duration = 1000 }) {
+export function keep(_: any, { duration = 1000, delay = 0 }) {
 	return {
-		duration
+		duration,
+		delay
 	};
 }

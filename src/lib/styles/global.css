@@ -3,12 +3,16 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+@font-face {
+	font-family: 'VT323';
+	src: url('$lib/styles/fonts/VT323-Regular.ttf');
+}
 
 :root {
 	--title-size: 5rem;
 	--text-size: 1rem;
 	--padding-size: 1rem;
-	--bg-color: black;
+	--bg-color: #0b0c29;
 	--primary: #1b588e;
 }
 

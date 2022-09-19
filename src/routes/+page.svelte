@@ -10,3 +10,7 @@
 />
 
 <h1 class="title">Hermita</h1>
+<img
+	src="https://blog.humanesociety.org/wp-content/uploads/2018/04/YELLOW-TANG-FISH-ISTOCK-486110113_381372.jpg"
+	alt=""
+/>

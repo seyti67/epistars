@@ -1,9 +1,8 @@
 <script context="module">
 	export let fluids = {
-		setConfig: (key, value) => {},
 		setColor: () => {},
-		splat: (x, y, dx, dy) => {},
-		multipleSplats: (amount) => {}
+		setSize: (size) => {},
+		splat: (x, y, dx, dy) => {}
 	};
 </script>
 
@@ -18,8 +17,8 @@
 		fluids.setColor({ r: colorArr[0], g: colorArr[1], b: colorArr[2] });
 	}
 
-	export let smokeSize = 1;
-	$: fluids.setConfig('SPLAT_RADIUS', 0.03 * smokeSize);
+	export let size = 1;
+	$: if (size) fluids.setSize(size);
 	onMount(async () => {
 		fluids = await import('$lib/scripts/fluids');
 		fluids.init();
