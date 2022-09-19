@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let tabTitle: string;
 	export let title: string;
 	export let description: string;
@@ -6,6 +8,10 @@
 	export let image: string = '';
 	export let url: string = '';
 	export let type: string = 'website';
+
+	onMount(async () => {
+		await import('$lib/styles/fonts.css');
+	});
 </script>
 
 <svelte:head>
