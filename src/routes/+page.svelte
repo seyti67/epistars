@@ -3,9 +3,10 @@
 </script>
 
 <Headers
-	title="Accueil"
-	description="Hermita est un jeu multijoueur rėalisė par le studio Epistars©"
-	image="https://i.pinimg.com/736x/e6/9e/19/e69e19173f655643b82f1bf381003382.jpg"
+	tabTitle="Accueil"
+	title="Jouer, farmer et créer"
+	description="Hermita est un jeu multijoueur rėalisė par le studio Epistars©. Vous avancerez dans un donjon rempli de mystėres et de dangers."
+	image="https://images3.alphacoders.com/868/868847.png"
 />
 
 <h1 class="title">Hermita</h1>
