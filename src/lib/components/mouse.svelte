@@ -22,5 +22,5 @@
 	}
 </script>
 
-<svelte:body on:mouseover={update} />
-<Smoke {smokeColor} {smokeSize} />
+<!-- <svelte:body on:mouseover={update} />
+<Smoke {smokeColor} {smokeSize} /> -->

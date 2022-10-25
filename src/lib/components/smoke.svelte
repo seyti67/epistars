@@ -17,8 +17,8 @@
 		fluids.setColor({ r: colorArr[0], g: colorArr[1], b: colorArr[2] });
 	}
 
-	export let size = 1;
-	$: if (size) fluids.setSize(size);
+	export let smokeSize = 1;
+	$: if (smokeSize) fluids.setSize(smokeSize);
 	onMount(async () => {
 		fluids = await import('$lib/scripts/fluids');
 		fluids.init();
