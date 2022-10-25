@@ -6,7 +6,7 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 

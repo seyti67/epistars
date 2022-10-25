@@ -1,50 +1,96 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
+	import { spring } from 'svelte/motion';
+	import { gradientFade } from '$lib/scripts/animations/gradient-fade';
+	import { fly, scale } from 'svelte/transition';
+	import Card from './svgs/card.svelte';
 
 	export let pages: { title: string; path: string }[];
 
-	let currentPath: string;
-	onMount(() => {
-		currentPath = window.location.pathname;
-	});
+	let currentPath = writable('');
 	afterNavigate((nav) => {
-		currentPath = nav.to?.url.pathname as string;
+		currentPath.set(nav.to?.url.pathname as string);
+	});
+
+	const duration = 1000;
+	let offsetTop = spring(100, { stiffness: 0.08, damping: 0.15 });
+	onMount(() => {
+		currentPath.set(window.location.pathname);
+
+		setTimeout(() => {
+			currentPath.subscribe((path) => {
+				const currentA = document.querySelector(`a[href="${path}"]`) as HTMLElement;
+				offsetTop.set(currentA.offsetTop);
+			});
+		}, duration);
 	});
 </script>
 
-<nav>
-	{#each pages as page}
-		<a class:active={currentPath === page.path} href={page.path} data-state="clickable">
-			{page.title}
-		</a>
+<nav transition:gradientFade={{ duration }}>
+	<div class="cards" transition:scale={{ duration: 300 }}>
+		<Card />
+	</div>
+	<div
+		class="index"
+		style:top="{$offsetTop}px"
+		in:fly={{ x: -50, delay: duration }}
+		out:fly={{ x: -50 }}
+	>
+		>
+	</div>
+	{#each pages as page, i}
+		<div class="link" transition:fly={{ x: -200, duration: 500, delay: i * 200 }}>
+			<a class:active={$currentPath === page.path} href={page.path} data-state="clickable">
+				{page.title}
+			</a>
+		</div>
 	{/each}
 </nav>
 
-<style>
-	:global(:root) {
-		--nav-h: 6rem;
-	}
+<style lang="scss">
 	nav {
 		position: fixed;
 		top: 0;
+		left: 0;
 		z-index: 2;
-		height: var(--nav-h);
+		height: 100%;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		gap: 2rem;
+		padding: 2rem;
+		background: rgba(0, 0, 0, 0.5);
+	}
+	.cards {
+		z-index: -1;
+		position: absolute;
+		right: 1rem;
+		background-color: var(--bg-color);
+		--size: min(80vw, 25rem);
+		width: var(--size);
+		height: var(--size);
+		border-radius: 50%;
+	}
+
+	.index {
+		position: absolute;
 	}
 	a {
-		font-size: 2.5rem;
+		margin-left: 3rem;
+	}
+	a,
+	.index {
+		font-size: 4rem;
 		color: white;
-		text-shadow: 0.1rem 0.1rem 0 #aaa, 0.1rem 0.1rem 0.3rem #000;
 		text-decoration: none;
 		font-family: 'VT323', monospace;
 		text-transform: uppercase;
-		z-index: 1;
 		transition-property: transform, filter, text-shadow;
 		transition-duration: 0.2s;
+		transform-origin: 0 50%;
 	}
 	a:active {
 		transform: scale(0.95);
@@ -53,7 +99,6 @@
 	a.active {
 		filter: brightness(0.8);
 		transform: scale(0.9);
-		transform-origin: 0 50%;
 		pointer-events: none;
 	}
 </style>

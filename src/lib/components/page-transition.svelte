@@ -30,9 +30,7 @@
 	{/key}
 	{#if transition}
 		<div class="curtain" in:circleClip={{ duration }} out:circleClip={{ duration, delay }}>
-			<div class="logo floating">
-				<Logo {delay} />
-			</div>
+			<Logo {delay} />
 		</div>
 	{/if}
 </div>
@@ -43,17 +41,13 @@
 	}
 	.curtain {
 		position: fixed;
-		top: var(--nav-h);
+		top: 0;
 		left: 0;
 		width: 100%;
-		height: calc(100% - var(--nav-h));
+		height: 100%;
 		background-color: black;
-	}
-	.logo {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100%;
-		width: 100%;
 	}
 </style>

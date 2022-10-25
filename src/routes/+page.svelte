@@ -1,5 +1,6 @@
 <script>
 	import Headers from '$lib/components/headers.svelte';
+	import Card from '$lib/components/svgs/card.svelte';
 </script>
 
 <Headers
@@ -10,7 +11,3 @@
 />
 
 <h1 class="title">BITS</h1>
-<img
-	src="https://blog.humanesociety.org/wp-content/uploads/2018/04/YELLOW-TANG-FISH-ISTOCK-486110113_381372.jpg"
-	alt=""
-/>
