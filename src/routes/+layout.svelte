@@ -8,6 +8,7 @@
 	import Nav from '$lib/components/nav.svelte';
 	import Hamburger from '$lib/components/hamburger.svelte';
 	import { afterNavigate } from '$app/navigation';
+	import Layers from '$lib/components/layers.svelte';
 	onMount(() => {
 		import('$lib/styles/lazy.css');
 	});
@@ -35,13 +36,14 @@
 
 	let openNav = false;
 	afterNavigate((nav) => {
-		/* setTimeout(() => {
+		setTimeout(() => {
 			openNav = false;
-		}, 10); */
+		}, 500);
 	});
 </script>
 
 <Mouse />
+<Layers nbLayers={3} density={0.005} />
 
 <Hamburger bind:open={openNav} />
 {#if openNav}
