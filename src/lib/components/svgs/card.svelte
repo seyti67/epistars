@@ -1,20 +1,27 @@
 <script lang="ts">
+	import { fly, draw } from 'svelte/transition';
+
 	export let coords = [0, 0];
+
+	const duration = 1000;
+	const config = { duration: 2000, delay: 1000 };
 </script>
 
-<svg
-	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	version="1.1"
-	id="Layer_1"
-	x="0px"
-	y="0px"
-	width="190px"
-	height="290px"
-	viewBox="{150 + 940 * coords[0]} {150 + 1400 * coords[1]} 940 1350"
-	xml:space="preserve"
->
-	<g>
+{#key coords}
+	<svg
+		out:fly={{ y: -30, x: 30, duration }}
+		in:fly={{ y: 30, x: -30, duration, delay: duration }}
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		version="1.1"
+		id="Layer_1"
+		x="0px"
+		y="0px"
+		width="190px"
+		height="290px"
+		viewBox="{150 + 940 * coords[0]} {150 + 1400 * coords[1]} 940 1350"
+		xml:space="preserve"
+	>
 		<g>
 			<g>
 				<path
@@ -23,6 +30,7 @@
 				/>
 
 				<rect
+					in:draw={config}
 					x="2136.938"
 					y="242.004"
 					fill="none"
@@ -330,6 +338,7 @@
 				/>
 
 				<rect
+					in:draw={config}
 					x="260.692"
 					y="242.004"
 					fill="none"
@@ -439,6 +448,7 @@
 				/>
 
 				<rect
+					in:draw={config}
 					x="3075.061"
 					y="242.004"
 					fill="none"
@@ -548,6 +558,7 @@
 				/>
 
 				<rect
+					in:draw={config}
 					x="4013.184"
 					y="242.005"
 					fill="none"
@@ -785,6 +796,7 @@
 				/>
 
 				<rect
+					in:draw={config}
 					x="1198.817"
 					y="242.001"
 					fill="none"
@@ -1500,6 +1512,7 @@
 				/>
 				<g>
 					<path
+						in:draw={config}
 						fill="none"
 						stroke="#FBB040"
 						stroke-width="6.7299"
@@ -2084,6 +2097,7 @@
 				/>
 				<g>
 					<path
+						in:draw={config}
 						fill="none"
 						stroke="#FBB040"
 						stroke-width="6.7299"
@@ -2569,6 +2583,7 @@
 				/>
 				<g>
 					<path
+						in:draw={config}
 						fill="none"
 						stroke="#FBB040"
 						stroke-width="6.7299"
@@ -2916,6 +2931,7 @@
 				/>
 				<g>
 					<path
+						in:draw={config}
 						fill="none"
 						stroke="#FBB040"
 						stroke-width="6.7299"
@@ -3429,8 +3445,5 @@
 				</g>
 			</g>
 		</g>
-	</g>
-</svg>
-
-<style>
-</style>
+	</svg>
+{/key}

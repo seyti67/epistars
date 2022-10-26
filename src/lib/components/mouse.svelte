@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Smoke from '$lib/components/smoke.svelte';
+	import MousePosition from './mouse-position.svelte';
 
 	const stateConfigs: { [key: string]: { color?: string; size?: number } } = {
 		default: {},
@@ -24,3 +25,4 @@
 
 <svelte:body on:mouseover={update} />
 <Smoke {smokeColor} {smokeSize} />
+<MousePosition />
