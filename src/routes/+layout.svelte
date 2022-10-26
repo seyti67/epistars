@@ -16,29 +16,17 @@
 		{
 			title: 'Accueil',
 			path: '',
-			cards: [
-				[3, 0],
-				[2, 0],
-				[0, 1]
-			]
+			cards: [0, 1, 2]
 		},
 		{
 			title: 'Télécharger',
 			path: 'telecharger/',
-			cards: [
-				[1, 0],
-				[0, 0],
-				[4, 0]
-			]
+			cards: [3, 4, 5]
 		},
 		{
 			title: 'Wiki',
 			path: 'wiki/',
-			cards: [
-				[1, 1],
-				[2, 1],
-				[4, 1]
-			]
+			cards: [6, 7, 8]
 		}
 	];
 	pages.forEach((page) => {
@@ -47,9 +35,9 @@
 
 	let openNav = false;
 	afterNavigate((nav) => {
-		setTimeout(() => {
+		/* setTimeout(() => {
 			openNav = false;
-		}, 10);
+		}, 10); */
 	});
 </script>
 

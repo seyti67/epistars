@@ -8,7 +8,7 @@
 	import Card from './svgs/card.svelte';
 	import { mouseDelta } from './mouse-position.svelte';
 
-	export let pages: { title: string; path: string; cards: number[][] }[];
+	export let pages: { title: string; path: string; cards: number[] }[];
 
 	let currentPath = writable('');
 	afterNavigate((nav) => {
@@ -28,11 +28,13 @@
 				currentIndex = pages.findIndex((page) => page.path === path);
 				const page = pages[currentIndex];
 				if (page) cards = page.cards;
+				cursorAngle = 0;
 			});
 		}, duration);
 	});
 
-	let cards: number[][] = [];
+	let cards: number[] = [];
+	let cursorAngle = 0;
 	const hoverLink = (e: MouseEvent) => {
 		const a = e.target as HTMLAnchorElement;
 		const index = a.dataset.index as unknown as number;
@@ -40,14 +42,14 @@
 		// display the cards
 		cards = pages[index].cards;
 
-		// rotate the cursor
-		const rotation = Math.sqrt(index) - Math.sqrt(currentIndex);
-		console.log(rotation);
+		// rotate the index
+		const diff = index - currentIndex;
+		cursorAngle = Math.sign(diff) * (Math.sqrt(Math.abs(diff)) * 45);
 	};
 </script>
 
 <nav transition:gradientFade={{ duration }}>
-	<div class="cards" transition:scale={{ duration: 300 }}>
+	<div class="cards" transition:scale={{ duration: 500 }}>
 		{#each cards as card, i}
 			<div
 				class="card"
@@ -55,13 +57,14 @@
 					50 *
 					(i / 2 + 1)}px, {$mouseDelta.y * 50 * (i / 2 + 1)}px) rotate({20 * (i - 1)}deg);"
 			>
-				<Card coords={card} />
+				<Card cardNumber={card} nth={i} />
 			</div>
 		{/each}
 	</div>
 	<div
 		class="index"
 		style:top="{$offsetTop}px"
+		style:--rotation="{cursorAngle}deg"
 		in:fly={{ x: -50, delay: duration }}
 		out:fly={{ x: -50 }}
 	>
@@ -72,7 +75,8 @@
 			class="link"
 			data-index={i}
 			transition:fly={{ x: -200, duration: 500, delay: i * 200 }}
-			on:mouseenter={hoverLink}
+			on:pointerenter={hoverLink}
+			on:pointerdown={(e) => {}}
 		>
 			<a class:active={$currentPath === page.path} href={page.path} data-state="clickable">
 				{page.title}
@@ -92,8 +96,8 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		gap: 2rem;
-		padding: 2rem;
+		gap: 3rem;
+		padding: 1rem;
 		background: rgba(0, 0, 0, 0.5);
 	}
 	.cards {
@@ -102,6 +106,12 @@
 		right: 0rem;
 		height: 28rem;
 		width: 28rem;
+		filter: brightness(0.5);
+	}
+	@media (min-width: 900px) {
+		.cards {
+			filter: none;
+		}
 	}
 	.card {
 		position: absolute;
@@ -117,17 +127,21 @@
 
 	.index {
 		position: absolute;
+		transform: rotate(var(--rotation));
 	}
 	.link {
 		width: fit-content;
 	}
 	a {
-		margin-left: 3rem;
+		margin-left: 4rem;
 	}
 	a,
 	.index {
-		font-size: 4rem;
-		color: white;
+		font-size: 3rem;
+		color: black;
+		background-color: white;
+		border: solid 3px black;
+		padding: 0.3rem 1rem;
 		text-decoration: none;
 		font-family: 'VT323', monospace;
 		text-transform: uppercase;
@@ -141,7 +155,6 @@
 	}
 	a.active {
 		filter: brightness(0.8);
-		transform: scale(0.9);
 		pointer-events: none;
 	}
 </style>
