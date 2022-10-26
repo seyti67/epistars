@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
+	import { beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { spring } from 'svelte/motion';
@@ -11,20 +11,20 @@
 	export let pages: { title: string; path: string; cards: number[] }[];
 
 	let currentPath = writable('');
-	afterNavigate((nav) => {
+	beforeNavigate((nav) => {
 		currentPath.set(nav.to?.url.pathname as string);
 	});
 
 	const duration = 1000;
-	let offsetTop = spring(100, { stiffness: 0.08, damping: 0.15 });
+	let offsetTop = spring(-70, { stiffness: 0.08, damping: 0.15 });
 	let currentIndex = 0;
 	onMount(() => {
 		currentPath.set(window.location.pathname);
-
 		setTimeout(() => {
 			currentPath.subscribe((path) => {
 				const currentA = document.querySelector(`a[href="${path}"]`) as HTMLElement;
-				offsetTop.set(currentA.offsetTop);
+				const { top } = currentA.getBoundingClientRect();
+				offsetTop.set(top);
 				currentIndex = pages.findIndex((page) => page.path === path);
 				const page = pages[currentIndex];
 				if (page) cards = page.cards;
@@ -68,17 +68,18 @@
 		in:fly={{ x: -50, delay: duration }}
 		out:fly={{ x: -50 }}
 	>
-		>
+		<span>></span>
 	</div>
 	{#each pages as page, i}
 		<div
 			class="link"
 			data-index={i}
+			class:active={$currentPath === page.path}
 			transition:fly={{ x: -200, duration: 500, delay: i * 200 }}
 			on:pointerenter={hoverLink}
 			on:pointerdown={(e) => {}}
 		>
-			<a class:active={$currentPath === page.path} href={page.path} data-state="clickable">
+			<a href={page.path} data-state="clickable">
 				{page.title}
 			</a>
 		</div>
@@ -123,14 +124,35 @@
 			height: 100%;
 			position: relative;
 		}
+		&:hover {
+			z-index: 1;
+		}
 	}
 
 	.index {
 		position: absolute;
-		transform: rotate(var(--rotation));
+		border-radius: 1rem 0 0 1rem;
+		z-index: 2;
+		span {
+			display: block;
+			transition: transform 300ms var(--elastic);
+			transform: rotate(var(--rotation));
+		}
 	}
 	.link {
 		width: fit-content;
+		transition: transform 300ms var(--elastic);
+		transform-origin: 0% 50%;
+	}
+	.link:hover {
+		transform: scale(1.05);
+	}
+	.link:active {
+		transform: scale(0.95);
+	}
+	.link.active {
+		filter: brightness(0.8);
+		transform: translateX(-0.5rem) scale(0.9);
 	}
 	a {
 		margin-left: 4rem;
@@ -145,16 +167,6 @@
 		text-decoration: none;
 		font-family: 'VT323', monospace;
 		text-transform: uppercase;
-		transition-property: transform, filter, text-shadow;
-		transition-duration: 0.2s;
-		transform-origin: 0 50%;
-	}
-	a:active {
-		transform: scale(0.95);
-		text-shadow: none;
-	}
-	a.active {
-		filter: brightness(0.8);
-		pointer-events: none;
+		transition-property: filter 400ms;
 	}
 </style>
