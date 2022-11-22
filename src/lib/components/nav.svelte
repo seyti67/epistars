@@ -4,11 +4,9 @@
 	import { writable } from 'svelte/store';
 	import { spring } from 'svelte/motion';
 	import { gradientFade } from '$lib/scripts/animations/gradient-fade';
-	import { fly, scale } from 'svelte/transition';
-	import Card from './svgs/card.svelte';
-	import { mouseDelta } from './mouse-position.svelte';
+	import { fly } from 'svelte/transition';
 
-	export let pages: { title: string; path: string; cards: number[] }[];
+	export let pages: { title: string; path: string }[];
 
 	let currentPath = writable('');
 	beforeNavigate((nav) => {
@@ -26,21 +24,15 @@
 				const { top } = currentA.getBoundingClientRect();
 				offsetTop.set(top);
 				currentIndex = pages.findIndex((page) => page.path === path);
-				const page = pages[currentIndex];
-				if (page) cards = page.cards;
 				cursorAngle = 0;
 			});
 		}, duration);
 	});
 
-	let cards: number[] = [];
 	let cursorAngle = 0;
 	const hoverLink = (e: MouseEvent) => {
 		const a = e.target as HTMLAnchorElement;
 		const index = a.dataset.index as unknown as number;
-
-		// display the cards
-		cards = pages[index].cards;
 
 		// rotate the index
 		const diff = index - currentIndex;
@@ -49,18 +41,6 @@
 </script>
 
 <nav transition:gradientFade={{ duration }}>
-	<div class="cards" transition:scale={{ duration: 500 }}>
-		{#each cards as card, i}
-			<div
-				class="card"
-				style="margin-left: {i * 4}rem; transform: translate({$mouseDelta.x *
-					50 *
-					(i / 2 + 1)}px, {$mouseDelta.y * 50 * (i / 2 + 1)}px) rotate({20 * (i - 1)}deg);"
-			>
-				<Card cardNumber={card} nth={i} />
-			</div>
-		{/each}
-	</div>
 	<div
 		class="index"
 		style:top="{$offsetTop}px"
@@ -101,34 +81,6 @@
 		padding: 1rem;
 		background: rgba(0, 0, 0, 0.5);
 	}
-	.cards {
-		z-index: -1;
-		position: absolute;
-		right: 0rem;
-		height: 28rem;
-		width: 28rem;
-		filter: brightness(0.5);
-	}
-	@media (min-width: 900px) {
-		.cards {
-			filter: none;
-		}
-	}
-	.card {
-		position: absolute;
-		transform-origin: 50% 100%;
-		width: 285px;
-		height: 435px;
-		:global(svg) {
-			width: 100%;
-			height: 100%;
-			position: relative;
-		}
-		&:hover {
-			z-index: 1;
-		}
-	}
-
 	.index {
 		position: absolute;
 		border-radius: 1rem 0 0 1rem;

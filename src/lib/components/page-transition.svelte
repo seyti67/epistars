@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { circleClip } from '$lib/scripts/animations/circle-clip';
-	import { keep } from '$lib/scripts/animations/keep';
 	import Logo from './logo.svelte';
 
-	const duration = 1000;
+	const duration = 500;
 	const delay = 500;
 
-	let key = 0;
 	let transition = false;
 	let startedAt = 0;
 	beforeNavigate(() => {
-		key += 1;
 		transition = true;
 		startedAt = Date.now();
 	});
@@ -23,21 +20,18 @@
 </script>
 
 <div class="wrap">
-	{#key key}
-		<div class="page" out:keep={{ duration }}>
-			<slot />
-		</div>
-	{/key}
 	{#if transition}
 		<div class="curtain" in:circleClip={{ duration }} out:circleClip={{ duration, delay }}>
-			<Logo {delay} />
+			<Logo {delay} {duration} />
 		</div>
 	{/if}
 </div>
 
 <style>
 	.wrap {
-		position: relative;
+		z-index: 1;
+		position: fixed;
+		height: 100vh;
 	}
 	.curtain {
 		position: fixed;

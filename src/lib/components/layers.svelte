@@ -12,7 +12,8 @@
 	onMount(() => {
 		const { innerWidth, innerHeight } = window;
 		layers.forEach((layer, i) => {
-			const dotSize = dotFactor * (i + 1);
+			const index = i + 1;
+			const dotSize = dotFactor * index;
 			const offset = dotSize * 10;
 			const width = Math.ceil(innerWidth / dotSize) + 2 * offset;
 			const height = Math.ceil(innerHeight / dotSize) + 2 * offset;
@@ -27,7 +28,7 @@
 
 			const ctx = layer.getContext('2d') as CanvasRenderingContext2D;
 			ctx.fillStyle = 'white';
-			const nbDots = Math.floor((density * layer.width * layer.height) / dotSize);
+			const nbDots = Math.floor((density * layer.width * layer.height * index) / dotSize);
 			for (let i = 0; i < nbDots; i++) {
 				const x = Math.floor(Math.random() * layer.width);
 				const y = Math.floor(Math.random() * layer.height);
@@ -41,9 +42,9 @@
 	<canvas
 		class="layer"
 		bind:this={layers[layerIndex]}
-		style:transform="translate({-30 * (layerIndex + 2) * $mouseDelta.x}px, {-30 *
+		style:transform="translate3d({-60 * (layerIndex + 2) * $mouseDelta.x}px, {-60 *
 			(layerIndex + 2) *
-			$mouseDelta.y}px)"
+			$mouseDelta.y}px, 0)"
 	/>
 {/each}
 

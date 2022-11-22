@@ -16,18 +16,15 @@
 	const pages = [
 		{
 			title: 'Accueil',
-			path: '',
-			cards: [0, 1, 2]
+			path: ''
 		},
 		{
 			title: 'Télécharger',
-			path: 'telecharger/',
-			cards: [3, 4, 5]
+			path: 'telecharger/'
 		},
 		{
 			title: 'Wiki',
-			path: 'wiki/',
-			cards: [6, 7, 8]
+			path: 'wiki/'
 		}
 	];
 	pages.forEach((page) => {
@@ -43,15 +40,14 @@
 </script>
 
 <Mouse />
-<Layers nbLayers={3} density={0.005} />
+<Layers nbLayers={3} density={0.003} />
 
 <Hamburger bind:open={openNav} />
 {#if openNav}
 	<Nav {pages} />
 {/if}
 
-<PageTransition>
-	<Scroll>
-		<slot />
-	</Scroll>
-</PageTransition>
+<Scroll>
+	<slot />
+</Scroll>
+<PageTransition />

@@ -34,4 +34,4 @@
 	};
 </script>
 
-<svelte:body on:mousemove={throttle(update, 100)} />
+<svelte:body on:mousemove={throttle(update, 30)} />
